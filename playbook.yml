@@ -1,0 +1,14 @@
+---
+- name: Install and configure Percona Server for MySQL
+
+  tasks:
+    - name: Install Percona Server Repo
+      yum: name="http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm" state=enabled
+
+    - name: Install github
+      yum: name="git" state=present
+
+    - name: Install Percona Server 5.7
+      yum: pkg={{ item }}
+      loop:
+        - Percona-Server-server-5.7

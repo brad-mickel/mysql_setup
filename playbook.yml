@@ -1,12 +1,33 @@
 ---
 - name: Install and configure Percona Server for MySQL
+  hosts: dbservers
+  remote_user: bdmickel
+  become: yes
 
+  
   tasks:
+    - name: install github
+      yum: pkg="git" state=present
+
+    - name: Configure github
+      - git_config:
+        name: user.email
+        scope: global
+        value: {{ github_email }}
+      - git_config:
+        name: user.name
+        scope: global
+        value: {{ github_name }}
+        
+    - name: Create directory for repo to be downloaded to
+      file: path=/tmp/mysqlconfigure state=directory
+    - name: Check out the repository
+      repo: https://github.com/brad-mickel/mysql_setup
+      dest: /tmp/mysqlconfigure
+      
+
     - name: Install Percona Server Repo
       yum: name="http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm" state=enabled
-
-    - name: Install github
-      yum: name="git" state=present
 
     - name: Install Percona Server 5.7
       yum: pkg={{ item }}

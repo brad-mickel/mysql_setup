@@ -6,20 +6,16 @@ datadir=/var/lib/mysql/
 pid-file=/var/lib/mysql/mysqld/mysqld/pid
 socket=/var/lib/mysql/mysql.sock
 
-
 #log files
 log-error=/var/log/mysql/mysql_error.log
 
-
-
+#Buffer pool
 innodb_buffer_pool_size={int}G #add variable for customization
-
 
 #binlog
 log-bin={hostname}-binlog #add variable for customization
 expire_logs_days= {int} #add variable for customization
 server-id={INET_ATON(ip)} #add variable for customization
-
 
 #orchestrator
 report-host={ip} #add variable for customization
